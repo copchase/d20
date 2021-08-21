@@ -1,6 +1,7 @@
 import os
 import random
 
+import requests
 from logzero import logger
 
 
@@ -42,9 +43,23 @@ def lambda_handler(event: dict, context) -> dict:
         "PepoG"
     ]
 
-    roll_value = random.randint(1, 20)
+    min_value = 1
+    max_value = 20
+    roll_value = random.randint(min_value, max_value)
+    return_string = [f"""{user_info["displayName"]} rolled a {roll_value}."""]
 
-    
+    if roll_value == max_value:
+        return_string.append(positive_text[random.randrange(len(positive_text))])
+    elif roll_value == min_value:
+        return_string.append(negative_text[random.randrange(len(negative_text))])
+    else:
+        return_string.append(neutral_text[random.randrange(len(neutral_text))])
+
+    request_body = {
+        "message": " ".join(return_string)
+    }
+
+    requests.post(response_url, None, request_body)
 
 
 def header_to_dict(header: str) -> dict:
@@ -55,5 +70,3 @@ def header_to_dict(header: str) -> dict:
         output[pair[0]] = pair[1]
 
     return output
-
-# 71150415
