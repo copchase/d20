@@ -9,7 +9,7 @@ def lambda_handler(event: dict, context) -> dict:
     response_url = event["headers"]["Nightbot-Response-Url"]
     user_info = header_to_dict(event["headers"]["Nightbot-User"])
     channel_info = header_to_dict(event["headers"]["Nightbot-Channel"])
-    filter_list = set(os.environ.get("FILTERED").split(","))
+    filter_list = set(os.environ.get("FILTERED", "").split(","))
 
     if user_info["providerId"] in filter_list:
         logger.info(f"""User {user_info["displayName"]} (ID: {user_info["providerId"]}) was filtered""")
@@ -59,7 +59,7 @@ def lambda_handler(event: dict, context) -> dict:
         "message": " ".join(return_string)
     }
 
-    requests.post(response_url, None, request_body)
+    a = requests.post(response_url, None, request_body)
 
 
 def header_to_dict(header: str) -> dict:
