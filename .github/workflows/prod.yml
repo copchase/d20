@@ -28,7 +28,7 @@ jobs:
       - name: Package
         run: |
           pip3 install -r requirements.txt -t .
-          zip -8 -r d20.zip . -x ".git*"
+          git archive --format=zip -o d20.zip HEAD
 
       - name: Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
