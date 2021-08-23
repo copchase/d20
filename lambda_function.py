@@ -40,7 +40,8 @@ def lambda_handler(event: dict, context) -> dict:
 
     neutral_text = [
         "OhISee",
-        "PepoG"
+        "PepoG",
+        ""
     ]
 
     min_value = 1
@@ -49,11 +50,11 @@ def lambda_handler(event: dict, context) -> dict:
     return_string = [f"""{user_info["displayName"]} rolled a {roll_value}."""]
 
     if roll_value == max_value:
-        return_string.append(positive_text[random.randrange(len(positive_text))])
+        return_string.append(random.choice(positive_text))
     elif roll_value == min_value:
-        return_string.append(negative_text[random.randrange(len(negative_text))])
+        return_string.append(random.choice(negative_text))
     else:
-        return_string.append(neutral_text[random.randrange(len(neutral_text))])
+        return_string.append(random.choice(neutral_text))
 
     request_body = {
         "message": " ".join(return_string)
