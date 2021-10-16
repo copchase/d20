@@ -6,6 +6,9 @@ from logzero import logger
 
 
 def lambda_handler(event: dict, context) -> dict:
+    if "warmup" in event:
+        return
+
     response_url = event["headers"]["Nightbot-Response-Url"]
     user_info = header_to_dict(event["headers"]["Nightbot-User"])
     channel_info = header_to_dict(event["headers"]["Nightbot-Channel"])
